@@ -194,13 +194,15 @@ function updateDatetimeStyleProperty(property, value, needsImmediateUpdate = fal
       // 如果页面上存在日期时间组件，立即更新其样式
       updateDatetimeStyleInDOM(datetimeComponent.style);
       
-      // 对于需要立即更新的属性（如separateLine和autoAdjust），确保立即调用updateDatetime
-      if (needsImmediateUpdate && typeof window.updateDatetime === 'function') {
+      // 对于所有样式属性变更，立即调用updateDatetime
+      if (typeof window.updateDatetime === 'function') {
         console.log(`立即更新日期时间组件显示 - 属性: ${property}`);
-        // 确保立即更新日期时间组件
+        window.updateDatetime();
+        window.updateDatetimeStyle(); // 同时调用updateDatetimeStyle确保样式完全更新
+      }
         window.updateDatetime();
       }
-    });
+    );
   });
 }
 
@@ -238,6 +240,7 @@ function convertRgbaToHex(rgba) {
   const g = parseInt(match[2]).toString(16).padStart(2, '0');
   const b = parseInt(match[3]).toString(16).padStart(2, '0');
   
+  // 忽略透明度，只返回RGB十六进制值
   return `#${r}${g}${b}`;
 }
 

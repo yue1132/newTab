@@ -198,7 +198,7 @@ document.addEventListener('DOMContentLoaded', function() {
       backgroundColor: 'rgba(255, 255, 255, 0.1)', // 背景颜色
       opacity: 1, // 透明度
       borderWidth: '2px', // 边框宽度
-      borderColor: 'rgba(255, 255, 255, 0.3)' // 边框颜色
+      borderColor: '#ffffff' // 边框颜色(已从rgba转换为十六进制)
     },
     isDragging: false, // 是否正在拖动搜索框
     dragOffset: { x: 0, y: 0 }, // 搜索框拖动偏移量
