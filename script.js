@@ -1280,15 +1280,7 @@ function resetSearchBoxPosition() {
     });
   }
   
-  // 保存日期时间组件位置
-  function saveDatetimePosition() {
-    chrome.storage.sync.set({ datetimeComponent: state.datetimeComponent }, function() {
-      console.log('日期时间组件位置已保存');
-    });
-  }
-  
-  
-  // 获取随机本地壁纸
+// 获取随机本地壁纸
   function openFilePicker() {
     // 使用壁纸管理器打开文件选择器
     if (window.wallpaperManager) {

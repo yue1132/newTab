@@ -97,6 +97,7 @@ function setupDatetimeDisplayControls() {
     });
     
     toggleSeparateLine.addEventListener('change', function() {
+      // 使用needsImmediateUpdate=true确保分行显示设置立即生效
       updateDatetimeStyleProperty('separateLine', this.checked, true);
     });
   }
@@ -112,7 +113,8 @@ function setupDatetimeDisplayControls() {
     });
     
     toggleAutoAdjust.addEventListener('change', function() {
-      updateDatetimeStyleProperty('autoAdjust', this.checked);
+      // 使用needsImmediateUpdate=true确保自动适应壁纸颜色设置立即生效
+      updateDatetimeStyleProperty('autoAdjust', this.checked, true);
     });
   }
   
@@ -168,7 +170,7 @@ function addTimeDisplayFonts(selectElement) {
 }
 
 // 更新日期时间组件样式属性
-function updateDatetimeStyleProperty(property, value) {
+function updateDatetimeStyleProperty(property, value, needsImmediateUpdate = false) {
   // 获取当前状态
   chrome.storage.sync.get(['datetimeComponent'], function(result) {
     let datetimeComponent = result.datetimeComponent || {
@@ -192,8 +194,10 @@ function updateDatetimeStyleProperty(property, value) {
       // 如果页面上存在日期时间组件，立即更新其样式
       updateDatetimeStyleInDOM(datetimeComponent.style);
       
-      // 调用全局updateDatetime函数以确保所有设置立即生效
-      if (typeof window.updateDatetime === 'function') {
+      // 对于需要立即更新的属性（如separateLine和autoAdjust），确保立即调用updateDatetime
+      if (needsImmediateUpdate && typeof window.updateDatetime === 'function') {
+        console.log(`立即更新日期时间组件显示 - 属性: ${property}`);
+        // 确保立即更新日期时间组件
         window.updateDatetime();
       }
     });
