@@ -368,6 +368,10 @@ document.addEventListener('DOMContentLoaded', function() {
 
   // 设置事件监听器
   function setupEventListeners() {
+    // 添加窗口大小变化事件监听器
+    window.addEventListener('resize', function() {
+      updateSearchBoxPosition();
+    });
     // 组件可见性切换事件
     document.getElementById('toggleSearchBox')?.addEventListener('change', function() {
       toggleComponentVisibility('searchBox', this.checked);
@@ -506,12 +510,36 @@ document.addEventListener('DOMContentLoaded', function() {
   // 更新搜索框位置
   function updateSearchBoxPosition() {
     const searchContainer = document.querySelector('.search-container');
+    const windowWidth = window.innerWidth;
+    const windowHeight = window.innerHeight;
     
-    // 如果是居中位置，使用transform
+    // 如果是居中位置，使用transform实现精确居中
     if (state.searchBoxPosition.centered) {
       searchContainer.style.left = '50%';
-      searchContainer.style.top = '38.2%';
+      searchContainer.style.top = '50%';
       searchContainer.style.transform = 'translate(-50%, -50%)';
+      
+      // 确保搜索框不会超出视窗
+      const searchBoxWidth = elements.searchBox.offsetWidth;
+      const searchBoxHeight = elements.searchBox.offsetHeight;
+      
+      // 调整最大宽度为视窗宽度的80%，最小宽度为300px
+      elements.searchBox.style.maxWidth = Math.min(windowWidth * 0.8, 800) + 'px';
+      elements.searchBox.style.minWidth = '300px';
+      
+      // 确保搜索框不会超出视窗边界
+      const maxLeft = windowWidth - searchBoxWidth;
+      const maxTop = windowHeight - searchBoxHeight;
+      
+      if (!state.searchBoxPosition.centered) {
+        const left = Math.min(Math.max(0, parseInt(state.searchBoxPosition.left)), maxLeft);
+        const top = Math.min(Math.max(0, parseInt(state.searchBoxPosition.top)), maxTop);
+        
+        searchContainer.style.left = left + 'px';
+        searchContainer.style.top = top + 'px';
+        state.searchBoxPosition.left = left + 'px';
+        state.searchBoxPosition.top = top + 'px';
+      }
     } else {
       // 否则使用绝对定位
       searchContainer.style.left = state.searchBoxPosition.left;

@@ -65,6 +65,33 @@ function setupDatetimeStyleControls() {
     });
   }
   
+  // 背景透明度控制
+  const bgOpacityInput = document.getElementById('bgOpacityInput');
+  const bgOpacityValue = document.getElementById('bgOpacityValue');
+  if (bgOpacityInput) {
+    // 从状态中获取当前值
+    chrome.storage.sync.get(['datetimeComponent'], function(result) {
+      if (result.datetimeComponent && result.datetimeComponent.style) {
+        const opacity = result.datetimeComponent.style.bgOpacity || 1;
+        bgOpacityInput.value = opacity;
+        if (bgOpacityValue) bgOpacityValue.textContent = opacity;
+      }
+    });
+    
+    bgOpacityInput.addEventListener('input', function() {
+      const newValue = parseFloat(this.value);
+      if (bgOpacityValue) bgOpacityValue.textContent = newValue;
+      
+      // 立即更新DOM中的背景透明度
+      const datetimeComponent = document.getElementById('datetime-component');
+      if (datetimeComponent) {
+        datetimeComponent.style.backgroundColor = `rgba(0, 0, 0, ${newValue})`;
+      }
+      
+      updateDatetimeStyleProperty('bgOpacity', newValue, true);
+    });
+  }
+  
   // 字体选择控制
   const fontFamilyInput = document.getElementById('fontFamilyInput');
   if (fontFamilyInput) {
@@ -176,12 +203,16 @@ function updateDatetimeStyleProperty(property, value, needsImmediateUpdate = fal
     let datetimeComponent = result.datetimeComponent || {
       visible: true,
       position: { centered: true, left: '50%', top: '20%' },
-      style: {}
+      style: {
+        bgOpacity: 1 // 默认背景完全不透明
+      }
     };
     
     // 确保style对象存在
     if (!datetimeComponent.style) {
-      datetimeComponent.style = {};
+      datetimeComponent.style = {
+        bgOpacity: 1
+      };
     }
     
     // 更新指定属性
@@ -216,9 +247,20 @@ function updateDatetimeStyleInDOM(style) {
     // 跳过不直接应用于DOM的属性（如格式设置）
     if (property !== 'datetimeFormat' && property !== 'showSeconds' && 
         property !== 'showDate' && property !== 'separateLine') {
-      datetimeComponent.style[property] = style[property];
+      // 特殊处理背景透明度
+      if (property === 'bgOpacity') {
+        datetimeComponent.style.backgroundColor = 
+          `rgba(0, 0, 0, ${style[property]})`;
+      } else {
+        datetimeComponent.style[property] = style[property];
+      }
     }
   });
+  
+  // 确保背景透明度更新后立即生效
+  if (style.bgOpacity !== undefined) {
+    datetimeComponent.style.backgroundColor = `rgba(0, 0, 0, ${style.bgOpacity})`;
+  }
   
   // 无论什么样式属性更改，都调用updateDatetime函数来更新显示
   // 这样所有设置都能立即生效而无需刷新页面

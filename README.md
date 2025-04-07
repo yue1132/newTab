@@ -111,13 +111,6 @@
 - 初始版本发布
 - 实现基本功能：自定义壁纸、搜索框、日期时间显示
 
-## 📝 反馈与建议
-
-如果您有任何问题、建议或反馈，请通过以下方式联系我们：
-
-- 在 GitHub 上提交 Issue
-- 发送邮件至：[your-email@example.com](mailto:your-email@example.com)
-
 ## 📜 许可证
 
 本项目采用 MIT 许可证 - 详情请查看 [LICENSE](LICENSE) 文件
