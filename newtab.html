@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>新标签页</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+</head>
+<body>
+  <div class="background-container">
+    <div class="search-container">
+      <div class="search-wrapper">
+        <div class="search-engine-icon" id="currentEngineIcon"></div>
+        <input type="text" class="search-box" placeholder="搜索...">
+        <div class="search-icon"><i class="fas fa-search"></i></div>
+      </div>
+    </div>
+    
+    <div class="settings-button" id="settingsButton">
+      <i class="fas fa-cog"></i>
+    </div>
+    
+    <div class="settings-panel" id="settingsPanel">
+      <div class="settings-header">
+        <h2>设置</h2>
+        <button class="close-button" id="closeSettings"><i class="fas fa-times"></i></button>
+      </div>
+      
+      <div class="settings-content">
+        <div class="settings-section">
+          <h3>壁纸</h3>
+          <div class="wallpaper-grid" id="wallpaperGrid">
+            <!-- 壁纸将通过JS动态加载 -->
+            <div class="loading-wallpapers">正在加载壁纸...</div>
+          </div>
+        </div>
+        <div class="settings-section">
+          <h3>搜索引擎</h3>
+          <div class="search-engines">
+            <div class="search-engine" data-engine="google">
+              <img src="https://www.google.com/favicon.ico" alt="Google">
+              <span>Google</span>
+            </div>
+            <div class="search-engine" data-engine="bing">
+              <img src="https://www.bing.com/favicon.ico" alt="Bing">
+              <span>Bing</span>
+            </div>
+            <div class="search-engine" data-engine="baidu">
+              <img src="https://www.baidu.com/favicon.ico" alt="Baidu">
+              <span>百度</span>
+            </div>
+            <div class="search-engine" data-engine="duckduckgo">
+              <img src="https://duckduckgo.com/favicon.ico" alt="DuckDuckGo">
+              <span>DuckDuckGo</span>
+            </div>
+            <div class="search-engine add-engine-button">
+              <i class="fas fa-plus" style="font-size: 20px; margin-bottom: 5px;"></i>
+              <span>添加</span>
+            </div>
+          </div>
+        </div>
+        
+        <!-- 自定义搜索引擎部分已移至弹窗 -->
+
+<!-- 搜索框设置 -->
+<div class="settings-section">
+  <h3>搜索框设置</h3>
+  <div class="setting-row">
+    <label for="toggleSearchBox">显示搜索框</label>
+    <input type="checkbox" id="toggleSearchBox" checked>
+  </div>
+  <div class="setting-row">
+    <label for="borderRadiusInput">圆角大小 (px)</label>
+    <input type="range" id="borderRadiusInput" min="0" max="50" step="1">
+    <span id="borderRadiusValue">15</span>
+  </div>
+  
+  <div class="setting-row">
+    <label for="widthInput">宽度 (%)</label>
+    <input type="range" id="widthInput" min="20" max="100" step="5">
+    <span id="widthValue">40</span>
+  </div>
+  
+  <div class="setting-row">
+    <label for="maxWidthInput">最大宽度 (px)</label>
+    <input type="range" id="maxWidthInput" min="300" max="800" step="50">
+    <span id="maxWidthValue">500</span>
+  </div>
+  
+  <div class="setting-row">
+    <label for="heightInput">高度 (px)</label>
+    <input type="range" id="heightInput" min="30" max="100" step="5">
+    <span id="heightValue">auto</span>
+  </div>
+  
+  <div class="setting-row">
+    <label for="paddingInput">内边距</label>
+    <input type="text" id="paddingInput" placeholder="15px 20px">
+  </div>
+  
+  <div class="setting-row">
+    <label for="opacityInput">透明度</label>
+    <input type="range" id="opacityInput" min="0" max="1" step="0.1">
+    <span id="opacityValue">1</span>
+  </div>
+  
+  <div class="setting-row">
+    <label for="borderWidthInput">边框宽度 (px)</label>
+    <input type="range" id="borderWidthInput" min="0" max="5" step="1">
+    <span id="borderWidthValue">2</span>
+  </div>
+  
+  <div class="setting-row">
+    <label for="borderColorInput">边框颜色</label>
+    <input type="color" id="borderColorInput" value="#ffffff">
+  </div>
+  
+  <div class="setting-row">
+    <button class="reset-position-button" id="resetPositionButton">重置为默认设置</button>
+  </div>
+</div>
+        
+        
+        <div class="settings-section">
+          <h3>日期时间设置</h3>
+          <div class="setting-row">
+            <label for="toggleDatetime">显示日期时间</label>
+            <input type="checkbox" id="toggleDatetime" checked>
+          </div>
+          <!-- 显示日期选项已移除 -->
+          <div class="setting-row">
+            <label for="toggleSeparateLine">日期时间分行显示</label>
+            <input type="checkbox" id="toggleSeparateLine">
+          </div>
+          <div class="setting-row">
+            <label for="toggleAutoAdjust">自动适应壁纸颜色</label>
+            <input type="checkbox" id="toggleAutoAdjust" checked>
+          </div>
+          <div class="setting-row">
+            <label for="datetimeFormatInput">日期时间格式</label>
+            <input type="text" id="datetimeFormatInput" placeholder="YYYY-MM-DD HH:mm:ss">
+          </div>
+          <div class="setting-row">
+            <label for="fontSizeInput">字体大小 (px)</label>
+            <input type="range" id="fontSizeInput" min="12" max="72" step="1">
+            <span id="fontSizeValue">16</span>
+          </div>
+          <div class="setting-row">
+            <label for="fontColorInput">字体颜色</label>
+            <input type="color" id="fontColorInput" value="#ffffff">
+          </div>
+          <div class="setting-row">
+            <label for="fontFamilyInput">字体</label>
+            <select id="fontFamilyInput">
+              <option value="'Segoe UI', Arial, sans-serif">默认</option>
+              <option value="'Arial', sans-serif">Arial</option>
+              <option value="'Times New Roman', serif">Times New Roman</option>
+              <option value="'Courier New', monospace">Courier New</option>
+            </select>
+          </div>
+          <div class="setting-row">
+            <button class="reset-position-button" id="resetDatetimeButton">重置默认设置</button>
+          </div>
+        </div>
+
+        <div class="settings-section">
+          <h3>快捷键设置</h3>
+          <div class="shortcut-settings">
+            <div class="shortcut-setting-item">
+              <label>打开设置菜单：</label>
+              <div class="shortcut-input-group">
+                <div class="modifier-keys">
+                  <label><input type="checkbox" id="settingsShortcutAlt" checked> Alt</label>
+                  <label><input type="checkbox" id="settingsShortcutCtrl"> Ctrl</label>
+                  <label><input type="checkbox" id="settingsShortcutShift"> Shift</label>
+                </div>
+                <input type="text" id="settingsShortcutKey" placeholder="按键" readonly>
+              </div>
+            </div>
+            <div class="shortcut-tip">按ESC键可快速关闭设置面板</div>
+          </div>
+        </div>
+        
+      </div>
+    </div>
+  </div>
+  <script src="text-contrast.js"></script>
+  <script src="custom-engine-modal.js"></script>
+  <script src="image-compressor.js"></script>
+  <script src="wallpaper-manager.js"></script>
+  <script src="datetime-settings.js"></script>
+  <script src="script.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,16 @@
+{
+  "manifest_version": 3,
+  "name": "新标签页定制",
+  "version": "1.0",
+  "description": "自定义新标签页，包含透明搜索框和壁纸选择功能",
+  "chrome_url_overrides": {
+    "newtab": "newtab.html"
+  },
+  "permissions": ["storage", "search", "unlimitedStorage", "fileSystem"],
+  "host_permissions": [],
+  "icons": {
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  }
+}
