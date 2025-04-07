@@ -473,8 +473,21 @@ const WallpaperManager = {
       this.deleteWallpaperFromFileSystem(fileName, () => {
         // 触发壁纸删除事件
         this.dispatchEvent('wallpaperDeleted', path);
-        // 更新UI
-        this.updateWallpaperGrid();
+        // 强制同步更新UI
+        if (typeof this.updateWallpaperGrid === 'function') {
+          this.updateWallpaperGrid();
+        }
+        // 立即刷新设置页面中的壁纸窗口
+        if (window.refreshWallpaperSettings) {
+          window.refreshWallpaperSettings();
+        }
+        // 确保UI立即更新
+        setTimeout(() => {
+          this.updateWallpaperGrid();
+          if (window.refreshWallpaperSettings) {
+            window.refreshWallpaperSettings();
+          }
+        }, 0);
         
         if (callback) callback();
       });
@@ -483,8 +496,21 @@ const WallpaperManager = {
       this.deleteWallpaperData(wallpaperId, () => {
         // 触发壁纸删除事件
         this.dispatchEvent('wallpaperDeleted', path);
-        // 更新UI
-        this.updateWallpaperGrid();
+        // 强制同步更新UI
+        if (typeof this.updateWallpaperGrid === 'function') {
+          this.updateWallpaperGrid();
+        }
+        // 立即刷新设置页面中的壁纸窗口
+        if (window.refreshWallpaperSettings) {
+          window.refreshWallpaperSettings();
+        }
+        // 确保UI立即更新
+        setTimeout(() => {
+          this.updateWallpaperGrid();
+          if (window.refreshWallpaperSettings) {
+            window.refreshWallpaperSettings();
+          }
+        }, 0);
         
         if (callback) callback();
       });
